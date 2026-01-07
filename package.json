@@ -16,8 +16,10 @@
   ],
   "dependencies": {
     "@sanity/vision": "^5.1.0",
+    "katex": "^0.16.27",
     "react": "^19.1",
     "react-dom": "^19.1",
+    "react-katex": "^3.1.0",
     "sanity": "^5.1.0",
     "styled-components": "^6.1.18"
   },
