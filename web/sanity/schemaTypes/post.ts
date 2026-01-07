@@ -47,7 +47,16 @@ export default defineType({
       name: 'studyDate',
       title: '공부 날짜',
       type: 'date',
-      validation: (Rule) => Rule.required(),
+      description: 'Study Log 달력에 표시될 날짜',
+
+    validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const type = context.document?.type
+          if (type === 'study' && !value) {
+            return 'Study 글에는 공부 날짜가 필요합니다.'
+          }
+          return true
+        }),
     }),
 
     /** 대표 이미지 (필수) */
@@ -59,6 +68,13 @@ export default defineType({
         hotspot: true,
       },
       validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+       name: 'publishedAt', 
+       title: '작성일', 
+       type: 'datetime', 
+       initialValue: () => new Date().toISOString(), 
     }),
 
     /** 요약 */
@@ -74,17 +90,16 @@ export default defineType({
       name: 'body',
       title: '본문',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [{ type: 'block' },
+        {
+        type: 'image',
+        options: { hotspot:true }
+      }
+
+      ],
+      
       validation: (Rule) => Rule.required(),
     }),
   ],
 
-  /** 대표 이미지 없을 때 fallback 대비 (프론트에서 사용) */
-  preview: {
-    select: {
-      title: 'title',
-      media: 'mainImage',
-      subtitle: 'type',
-    },
-  },
 })
