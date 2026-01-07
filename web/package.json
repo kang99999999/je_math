@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "set NEXT_DISABLE_TURBOPACK=1 && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -20,7 +20,7 @@
     "react-katex": "^3.1.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
-    "sanity": "^4.22.0",
+    "sanity": "^5.2.0",
     "styled-components": "^6.2.0"
   },
   "devDependencies": {
