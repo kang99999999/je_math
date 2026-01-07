@@ -2,9 +2,13 @@ import Image from 'next/image'
 import { sanityClient, urlFor } from '@/lib/sanity'
 import { postBySlugQuery } from '@/lib/queries'
 import { notFound } from 'next/navigation'
-import { PortableText, PortableTextComponents } from '@portabletext/react'
+import {
+  PortableText,
+  PortableTextComponents,
+} from '@portabletext/react'
 import { BlockMath, InlineMath } from 'react-katex'
 import 'katex/dist/katex.min.css'
+import { ReactNode } from 'react'
 
 type Post = {
   _id: string
@@ -25,11 +29,14 @@ export default async function PostDetailPage({
 }) {
   const { slug } = await params
 
-  const post: Post | null = await sanityClient.fetch(postBySlugQuery, { slug })
+  const post: Post | null = await sanityClient.fetch(
+    postBySlugQuery,
+    { slug }
+  )
 
   if (!post) notFound()
 
-  const colorMap = {
+  const colorMap: Record<Post['type'], string> = {
     study: 'text-cyan-400',
     news: 'text-violet-400',
     scrap: 'text-amber-400',
@@ -38,7 +45,7 @@ export default async function PostDetailPage({
   const components: PortableTextComponents = {
     types: {
       image: ({ value }) => (
-        <figure className="my-8">
+        <figure className="my-10">
           <Image
             src={urlFor(value).width(900).url()}
             alt={value.alt || ''}
@@ -55,11 +62,15 @@ export default async function PostDetailPage({
     },
 
     block: {
-      normal: ({ children }) => {
-        const text = children
+      normal: ({ children }: { children?: ReactNode }) => {
+        // ✅ TS-safe 처리 (배포 에러 방지 핵심)
+        const safeChildren = Array.isArray(children) ? children : []
+
+        const text = safeChildren
           .map(c => (typeof c === 'string' ? c : ''))
           .join('')
 
+        // ✅ 블록 수식 ($$ ... $$)
         if (text.startsWith('$$') && text.endsWith('$$')) {
           return <BlockMath math={text.slice(2, -2)} />
         }
@@ -80,8 +91,11 @@ export default async function PostDetailPage({
         <span>{post.publishedAt.slice(0, 10)}</span>
       </div>
 
-      <h1 className="text-3xl font-semibold mb-10">{post.title}</h1>
+      <h1 className="text-3xl font-semibold mb-10">
+        {post.title}
+      </h1>
 
+      {/* Hero Image */}
       {post.mainImage && (
         <div className="relative aspect-[4/3] mb-12 rounded-xl overflow-hidden">
           <Image
@@ -93,8 +107,12 @@ export default async function PostDetailPage({
         </div>
       )}
 
+      {/* Content */}
       <article className="prose prose-invert max-w-none leading-relaxed">
-        <PortableText value={post.body} components={components} />
+        <PortableText
+          value={post.body}
+          components={components}
+        />
       </article>
     </main>
   )
