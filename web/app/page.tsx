@@ -33,6 +33,9 @@ export default async function HomePage() {
           해석학과 위상수학을 중심으로 공부한 내용을 정리합니다.
           <br />
           결과보다 구조와 직관을 남기는 것을 목표로 합니다.
+          <br />
+
+
         </p>
       </section>
 
