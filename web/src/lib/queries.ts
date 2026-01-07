@@ -1,13 +1,19 @@
-export const postsQuery = `
-*[_type == "post"] | order(publishedAt desc) {
-  _id,
-  title,
-  "slug": slug.current,
-  type,
-  excerpt,
-  publishedAt,
-  mainImage
-}
+import { groq } from 'next-sanity'
+
+export const postsQuery = groq`
+  *[
+    _type == "post" &&
+    !(_id in path("drafts.**"))
+  ] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    type,
+    excerpt,
+    publishedAt,
+    studyDate,
+    mainImage
+  }
 `
 
 

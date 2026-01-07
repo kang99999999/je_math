@@ -8,7 +8,8 @@ export type Post = {
   slug: string
   type: 'study' | 'news' | 'scrap'
   excerpt?: string
-  publishedAt: string
+  publishedAt?: string
+  studyDate?: string
   mainImage?: any
 }
 

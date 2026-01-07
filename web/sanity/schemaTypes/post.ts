@@ -75,6 +75,7 @@ export default defineType({
        title: '작성일', 
        type: 'datetime', 
        initialValue: () => new Date().toISOString(), 
+       
     }),
 
     /** 요약 */

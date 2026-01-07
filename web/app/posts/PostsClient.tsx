@@ -96,7 +96,9 @@ export default function PostsClient({ posts }: { posts: Post[] }) {
                     {post.type.toUpperCase()}
                   </span>
                   <span className="text-gray-500">
-                    {post.publishedAt.slice(0, 10)}
+                      {post.publishedAt
+                      ? post.publishedAt.slice(0, 10)
+                      : ''}
                   </span>
                 </div>
 
