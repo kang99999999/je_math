@@ -4,6 +4,7 @@ import { visionTool } from '@sanity/vision'
 
 import { apiVersion, dataset, projectId } from './sanity/env'
 import { schemaTypes } from './sanity/schemaTypes'
+import { structure } from './sanity/structure' // ✅ 여기
 
 export default defineConfig({
   name: 'default',
@@ -16,7 +17,7 @@ export default defineConfig({
   basePath: '/studio',
 
   plugins: [
-    deskTool(),
+    deskTool({structure}),
     visionTool({ defaultApiVersion: apiVersion }),
   ],
 
