@@ -1,6 +1,4 @@
-import { StructureBuilder } from 'sanity/structure'
-
-export const structure = (S: StructureBuilder) =>
+export const structure = (S: any) =>
   S.list()
     .title('Content')
     .items(S.documentTypeListItems())
