@@ -73,3 +73,17 @@ export const studyDatesQuery = groq`
     _createdAt
   }
 `
+export const homeRecentStudyQuery = groq`
+  *[
+    _type == "post" &&
+    type == "study" &&
+    !(_id in path("drafts.**"))
+  ]
+  | order(coalesce(studyDate, publishedAt, _createdAt) desc)[0...3] {
+    _id,
+    title,
+    "slug": slug.current,
+    studyDate,
+    publishedAt
+  }
+`
