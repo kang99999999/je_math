@@ -64,7 +64,7 @@ export default function PostsClient({ posts }: { posts: Post[] }) {
           return (
             <Link
               key={post._id}
-              href={`/posts/${post.slug}`}
+              href={`/posts/${post.slug.current}`}
               className={`group rounded-xl overflow-hidden bg-white/5 border
                 transition hover:-translate-y-1
                 hover:border-${color}-400/50`}

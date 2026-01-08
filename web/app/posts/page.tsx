@@ -5,7 +5,9 @@ import PostsClient from './PostsClient'
 export type Post = {
   _id: string
   title: string
-  slug: string
+   slug: {
+    current: string
+  }
   type: 'study' | 'news' | 'scrap'
   excerpt?: string
   publishedAt?: string
