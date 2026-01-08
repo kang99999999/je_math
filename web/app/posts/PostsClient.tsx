@@ -34,7 +34,17 @@ export default function PostsClient({ posts }: { posts: Post[] }) {
             const active = filter === type
             const color =
               type !== 'all' ? TYPE_COLOR[type] : null
-
+            const TYPE_STYLE = {
+            study: {
+              active: 'bg-cyan-400/20 text-cyan-300 border-cyan-400',
+            },
+            news: {
+              active: 'bg-violet-400/20 text-violet-300 border-violet-400',
+            },
+            scrap: {
+              active: 'bg-amber-400/20 text-amber-300 border-amber-400',
+            },
+          }
             return (
               <button
                 key={type}
@@ -44,7 +54,7 @@ export default function PostsClient({ posts }: { posts: Post[] }) {
                     active
                       ? type === 'all'
                         ? 'bg-white text-black border-white'
-                        : `bg-${color}-400 text-black border-${color}-400`
+                        : TYPE_STYLE[type].active
                       : 'border-gray-600 text-gray-300 hover:border-white'
                   }
                 `}

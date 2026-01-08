@@ -27,13 +27,13 @@ export default function RootLayout({
 
             {/* Menu */}
             <div className="flex items-center gap-6 text-sm text-white-400">
-              <Link href="/" className="hover:text-white">
+              <Link href="/" className="text-white/80 hover:text-white transition">
                 Home
               </Link>
-              <Link href="/posts" className="hover:text-white">
+              <Link href="/posts" className="text-white/80 hover:text-white transition">
                 Posts
               </Link>
-              <Link href="/study" className="hover:text-white">
+              <Link href="/study" className="text-white/80 hover:text-white transition">
                 Study Logs
               </Link>
               <Link

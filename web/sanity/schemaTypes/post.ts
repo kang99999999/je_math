@@ -47,12 +47,10 @@ export default defineType({
       name: 'studyDate',
       title: '공부 날짜',
       type: 'date',
-      description: 'Study Log 달력에 표시될 날짜',
-
-    validation: (Rule) =>
+      hidden: ({ document }) => document?.type !== 'study',
+      validation: (Rule) =>
         Rule.custom((value, context) => {
-          const type = context.document?.type
-          if (type === 'study' && !value) {
+          if (context.document?.type === 'study' && !value) {
             return 'Study 글에는 공부 날짜가 필요합니다.'
           }
           return true
