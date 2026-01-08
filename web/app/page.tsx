@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { sanityClient } from '@/lib/sanity'
 import { postsQuery } from '@/lib/queries'
+import { homeRecentStudyQuery } from '@/lib/queries'
 
 type Post = {
   _id: string
@@ -10,7 +11,7 @@ type Post = {
 }
 
 export default async function HomePage() {
-  const posts: Post[] = await sanityClient.fetch(postsQuery)
+  const posts: Post[] = await sanityClient.fetch(homeRecentStudyQuery)
 
   const recentStudies = posts
     .filter(p => p.type === 'study')
