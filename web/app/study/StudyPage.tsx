@@ -6,7 +6,8 @@ import Link from 'next/link'
 type Post = {
   _id: string
   title: string
-  slug: string
+  slug: { current: string }
+  studyDate?: string
   publishedAt?: string
   _createdAt?: string
 }
@@ -26,14 +27,18 @@ export default function StudyPage({ posts }: { posts: Post[] }) {
 
   /* 날짜별 post 묶기 */
   const postsByDate: PostsByDate = posts.reduce((acc, post) => {
-    const base = post.publishedAt || post._createdAt
-    if (!base) return acc
+  const base =
+    post.studyDate ||
+    post.publishedAt ||
+    post._createdAt
 
-    const date = base.slice(0, 10)
-    acc[date] = acc[date] || []
-    acc[date].push(post)
-    return acc
-  }, {} as PostsByDate)
+  if (!base) return acc
+
+  const date = base.slice(0, 10)
+  acc[date] = acc[date] || []
+  acc[date].push(post)
+  return acc
+}, {} as PostsByDate)
 
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
@@ -157,7 +162,7 @@ export default function StudyPage({ posts }: { posts: Post[] }) {
               {items.map(post => (
                   <li key={post._id}>
                   <Link
-                      href={`/posts/${post.slug}`}
+                      href={`/posts/${post.slug.current}`}
                       className="hover:underline"
                   >
                       {post.title}
@@ -186,7 +191,7 @@ export default function StudyPage({ posts }: { posts: Post[] }) {
               {postsByDate[selectedDate]?.map(post => (
                 <li key={post._id}>
                   <Link
-                    href={`/posts/${post.slug}`}
+                    href={`/posts/${post.slug.current}`}
                     className="hover:underline"
                   >
                     • {post.title}
