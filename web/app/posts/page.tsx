@@ -16,7 +16,11 @@ export type Post = {
 }
 
 export default async function PostsPage() {
-  const posts: Post[] = await sanityClient.fetch(postsQuery)
+  const posts: Post[] = await sanityClient.fetch(
+    postsQuery,
+    {},
+    {cache:'no-store'}
+  )
 
   return <PostsClient posts={posts} />
 }
